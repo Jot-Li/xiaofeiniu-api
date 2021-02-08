@@ -1,7 +1,6 @@
 /*
-  菜品类别相关的路由
+*菜品类别相关的路由
 */
-
 //引入express框架
 const express = require('express');
 //引入数据库连接池模块

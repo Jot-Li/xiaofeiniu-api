@@ -6,6 +6,7 @@ const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const categoryRouter = require('./routers/admin/category')
+const adminRouter = require('./routers/admin/admin');
 
 //创建HTTP应用服务器
 var app = express();
@@ -23,3 +24,4 @@ app.use(bodyParser.json());//把application/json
 
 //挂载路由器
 app.use('/admin/category',categoryRouter);
+app.use('/admin',adminRouter);
