@@ -9,18 +9,23 @@ module.exports=r;
 
 /*
 *GET请求可以有主体吗?
-*API：GET  /admin/login
+*API：GET  /admin/login/:aname&:apwd
+*完成用户登录验证(提示：有的项目中此处选择POST请求)
 *请求数据：{aname: 'xxx', apwd:'xxx'}
 *返回数据:
 *  {code: 200, msg: 'login success'}
 *  {code: 400, msg: 'aname or apwd err'}
 */
-r.get('/login/:aname&:apwd',(req,res)=>{
-    pool.query('SELECT * FROM xfn_admin WHERE aname=? AND apwd=?',
+r.get('/login/:aname/:apwd',(req,res)=>{
+    pool.query('SELECT aid FROM xfn_admin WHERE aname=? AND apwd=PASSWORD(?)',
     [req.params.aname,req.params.apwd],(err,result)=>{
         if(err)throw err;
-        console.log(result.data);
-        // if(){}
+        console.log(result);
+        if(result.length>0){
+            res.send({code:200, msg:'login success'});
+        }else{
+            res.send({code:400, msg:'aname or apwd err'});
+        }
     })
 })
 
@@ -34,10 +39,28 @@ r.get('/login/:aname&:apwd',(req,res)=>{
 *  {code: 401, msg: 'apwd not modified'}
 */
 r.patch('/',(req,res)=>{
-    var data = req.body;
-    pool.query('UPDATE xfn_admin SET ? WHERE aname=?',
-    [data,data.aname],(err,result)=>{
+    var data = req.body;//{aname:'',oldPwd:'',newPwd:''}
+    console.log(data);
+    //首先根据aname/oldPwd查询该用户是否存在
+    //如果查询到了用户，再修改其密码
+    pool.query('SELECT aid FROM xfn_admin WHERE aname=? AND apwd=PASSWORD(?)',
+    [data.aname,data.oldPwd],(err,result)=>{
         if(err)throw err;
-
+        console.log(result);
+        if(result.length==0){
+            res.send({code:400, msg:'password err'});
+            return;
+        }else{
+        //如果查询到了用户，再修改其密码
+            pool.query('UPDATE xfn_admin SET apwd=PASSWORD(?) WHERE aname=?',
+            [data.newPwd,data.aname],(err,result)=>{
+                if(err)throw err;
+                if(result.changedRows>0){//密码修改完成
+                    res.send({code:200, msg:'pwd modified success'});
+                }else{//新旧密码一样，未作修改
+                    res.send({code:401, msg:'pwd not modified'});
+                }
+            })
+        }
     })
 })
