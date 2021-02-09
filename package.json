@@ -8,10 +8,7 @@
     "start": "node ./index.js",
     "dev": "node-dev ./index.js"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Jot-Li/xiaofeiniu-api.git"
-  },
+  "repository": "git+https://github.com/Jot-Li/xiaofeiniu-api.git",
   "keywords": [
     "小肥牛",
     "xiaofeiniu",

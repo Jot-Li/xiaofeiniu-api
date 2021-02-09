@@ -8,6 +8,7 @@ const bodyParser = require('body-parser');
 const categoryRouter = require('./routers/admin/category')
 const adminRouter = require('./routers/admin/admin');
 const dishRouter = require('./routers/admin/dish');
+const settingsRouter = require('./routers/admin/settings');
 
 //创建HTTP应用服务器
 var app = express();
@@ -27,3 +28,4 @@ app.use(bodyParser.json());//把application/json
 app.use('/admin/category',categoryRouter);
 app.use('/admin',adminRouter);
 app.use('/admin/dish',dishRouter);
+app.use('/admin/settings',settingsRouter);
