@@ -9,6 +9,7 @@ const categoryRouter = require('./routers/admin/category')
 const adminRouter = require('./routers/admin/admin');
 const dishRouter = require('./routers/admin/dish');
 const settingsRouter = require('./routers/admin/settings');
+const tableRouter = require('./routers/admin/table');
 
 //创建HTTP应用服务器
 var app = express();
@@ -29,3 +30,4 @@ app.use('/admin/category',categoryRouter);
 app.use('/admin',adminRouter);
 app.use('/admin/dish',dishRouter);
 app.use('/admin/settings',settingsRouter);
+app.use('/admin/table',tableRouter);
