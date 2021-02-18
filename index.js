@@ -1,11 +1,12 @@
 /*
   小肥牛扫码点餐项目API子系统
 */
-const PORT = 8090;
+// const PORT = 8090;
+const PORT = 5050;
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
-const categoryRouter = require('./routers/admin/category')
+const categoryRouter = require('./routers/admin/category');
 const adminRouter = require('./routers/admin/admin');
 const dishRouter = require('./routers/admin/dish');
 const settingsRouter = require('./routers/admin/settings');

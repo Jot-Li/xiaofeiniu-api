@@ -67,7 +67,11 @@ r.post('/',(req,res)=>{
   (err,result)=>{
     if(err)throw err;
     if(result.affectedRows>0){
-      res.send({code:200,msg:'1 category added'});
+      res.send({
+        code:200,
+        msg:'1 category added',
+        cid:result.insertId
+      });
     }
   })
 })
